@@ -6,7 +6,7 @@ function getConnection(){
 	try{
 		$db_username="badasid";
 		$db_password="sidbada";
-		$connection=new PDO("pgsql:host=sbdignmad650;dbname=badasid;",$db_username,$db_password);
+		$connection=new PDO("pgsql:host=localhost;dbname=badasid;",$db_username,$db_password);
 		$connection->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 		//$connection->query('SET NAMES utf8'); 
 		//$connection->query('SET CHARACTER SET utf8'); 

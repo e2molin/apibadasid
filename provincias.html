@@ -7,7 +7,7 @@
 		var countryApp = angular.module('countryApp', []);
 		countryApp.controller('CountryCtrl', function ($scope, $http){
 			//Carga del fichero JSON
-			$http.get('http://localhost:1976/dbapi/slimrest/countries').success(function(data) {
+			$http.get('./countries').success(function(data) {
 				$scope.countries = data;
 			});
 			//Por defecto ordena por el campo nombre en sentido A-Z
