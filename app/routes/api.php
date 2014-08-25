@@ -5,11 +5,11 @@ if(!defined("SPECIALCONSTANT")) die("Acceso denegado");
 
 
 //Con use($app) tenemos acceso a este objeto desde dentro de la función
-$app->get("/provincias/",function() use($app){
+$app->get("/listaprovincias/",function() use($app){
 
 	try{
 		$connection=getConnection();
-		$dbh=$connection->prepare("SELECT nombreprovincia from provincias");
+		$dbh=$connection->prepare("SELECT nombreprovincia as name ,idprovincia as codine  from provincias");
 		$dbh->execute();
 		$provins=$dbh->fetchAll();
 		$connection=null;
