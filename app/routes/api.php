@@ -1,19 +1,15 @@
 <?php
-//require_once '../class/datasetPDO.class.php';
-
+//require 'app/class/datasetPDO.class.php';
 if(!defined("SPECIALCONSTANT")) die("Acceso denegado");
-
 
 //Con use($app) tenemos acceso a este objeto desde dentro de la función
 $app->get("/listaprovincias/",function() use($app){
-
 	try{
-		$connection=getConnection();
-		$dbh=$connection->prepare("SELECT nombreprovincia as name ,idprovincia as codine  from provincias");
-		$dbh->execute();
-		$provins=$dbh->fetchAll();
-		$connection=null;
-		
+	
+        $connection=getConnection();
+        $dbh=$connection->prepare("SELECT nombreprovincia as name ,idprovincia as codine  from provincias");
+        $dbh->execute();
+        $provins=$dbh->fetchAll();
 		$app->response->headers->set("Content-type","application/json;charset=utf-8");
 		$app->response->status(200);
 		$app->response->body(json_encode($provins));
@@ -21,44 +17,38 @@ $app->get("/listaprovincias/",function() use($app){
 	}catch(PDOException $e){
 		echo "Error: ".$e->getMessage();
 	}
-
-
 });
 
-$app->get("/countries/",function() use($app){
-
+$app->get("/listaterritorios/",function() use($app){
 	try{
-		$connection=getConnection();
-		$dbh=$connection->prepare("SELECT nombreprovincia as name ,idprovincia as population  from provincias");
-		$dbh->execute();
-		$countries=$dbh->fetchAll();
-		$connection=null;
-		
+
+	    $connection=getConnection();
+        $dbh=$connection->prepare("SELECT idterritorio ,nombre as nombreterri, tipo from territorios where tipo='Municipio' or tipo='Exclave' limit 500");
+        $dbh->execute();
+        $terris=$dbh->fetchAll();
 		$app->response->headers->set("Content-type","application/json;charset=utf-8");
 		$app->response->status(200);
-		$app->response->body(json_encode($countries));
+		$app->response->body(json_encode($terris));
 		
 	}catch(PDOException $e){
 		echo "Error: ".$e->getMessage();
 	}
-
-
 });
 
 
-$app->get("/provincia/:id",function($id) use($app){
+$app->get("/territorio/:id",function($id) use($app){
 
 	try{
-		$connection = new DatabasePDO();
-		$dbh=$connection->prepare("SELECT * from provincias where idprovincia=?");
+	    $connection=getConnection();
+		$dbh=$connection->prepare("SELECT * from territorios where idterritorio=?");
 		$dbh->bindParam(1,$id);
 		$dbh->execute();
-		$provin=$dbh->fetchObject();
+		$terriSelect=$dbh->fetchObject();
 		$connection=null;
 		
 		$app->response->headers->set("Content-type","application/json");
 		$app->response->status(200);
-		$app->response->body(json_encode($provin));
+		$app->response->body(json_encode($terriSelect));
 		
 	}catch(PDOException $e){
 		echo "Error: ".$e->getMessage();

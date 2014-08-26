@@ -12,14 +12,14 @@ class DatabasePDO extends PDO
     private $pass = ".consulta";
     //puerto postgreSql
     private $port = 5432;
-    private $dbh;
+    private $DBconexion;
  
     //creamos la conexión a la base de datos prueba
     public function __construct()
     {
         try {
  
-            $this->dbh = parent::__construct("pgsql:host=$this->host;port=$this->port;dbname=$this->dbname;user=$this->user;password=$this->pass");
+            $this->DBconexion = parent::__construct("pgsql:host=$this->host;port=$this->port;dbname=$this->dbname;user=$this->user;password=$this->pass");
  
         } catch(PDOException $e) {
  
@@ -33,7 +33,7 @@ class DatabasePDO extends PDO
     public function close_con()
     {
  
-        $this->dbh = null;
+        $this->DBconexion = null;
  
     }
  

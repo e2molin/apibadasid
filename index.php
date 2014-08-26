@@ -16,6 +16,7 @@ $app = new \Slim\Slim();
 $app->contentType('text/html; charset=utf-8');
 define("SPECIALCONSTANT",true);
 
+//require 'app/class/datasetPDO.class.php';
 require "app/libs/connect.php";
 require "app/routes/api.php";
 

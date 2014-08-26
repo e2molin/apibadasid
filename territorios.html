@@ -1,0 +1,36 @@
+﻿<html ng-app="territoriosApp">
+<head>
+	<meta charset="utf-8">
+	<title>Carga de un JSON de Territorios del APIBADASID</title>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
+	<script>
+		var territoriosApp = angular.module('territoriosApp', []);
+		territoriosApp.controller('TerritorioCtrl', function ($scope, $http){
+			//Carga del fichero JSON
+			$http.get('./listaterritorios').success(function(data) {
+				$scope.listaTerritorios = data;
+			});
+			//Por defecto ordena por el campo nombre en sentido A-Z
+			$scope.sortField = 'nombreterri';
+			$scope.reverse = false;
+		});
+	</script>
+</head>
+<body ng-controller="TerritorioCtrl">
+Filtrar por:<input ng-model="query" type="text"/>
+<table>
+<tr>
+<!--Al hacer clic en los encabezados de la tabla, cambia el campo y el criterio de ordenación, A-Z y Z-A-->
+<th><a href="" ng-click="sortField ='nombreterri'; reverse = !reverse">Nombre del territorio</a></th>
+<th><a href="" ng-click="sortField = 'tipo'; reverse = !reverse">Tipo</a></th>
+<th><a href="" ng-click="sortField = 'idterritorio'; reverse = !reverse">Indice</a></th>
+</tr>
+<!--Esto actúa como un bucle, generando una fila en la tabla para cada entidad del JSON-->
+<tr ng-repeat="territorio in listaTerritorios  | filter:query| orderBy:sortField:reverse">
+<td>{{territorio.nombreterri}}</td>
+<td>{{territorio.tipo}}</td>
+<td>{{territorio.idterritorio }}</td>
+</tr>
+</table>
+</body>
+</html>
