@@ -1,12 +1,12 @@
 <?php
-//require 'app/class/datasetPDO.class.php';
+
 if(!defined("SPECIALCONSTANT")) die("Acceso denegado");
+
 
 //Con use($app) tenemos acceso a este objeto desde dentro de la función
 $app->get("/listaprovincias/",function() use($app){
 	try{
-	
-        $connection=getConnection();
+		$connection = ConnectPDO::singleton();
         $dbh=$connection->prepare("SELECT nombreprovincia as name ,idprovincia as codine  from provincias");
         $dbh->execute();
         $provins=$dbh->fetchAll();
@@ -22,7 +22,7 @@ $app->get("/listaprovincias/",function() use($app){
 $app->get("/listaterritorios/",function() use($app){
 	try{
 
-	    $connection=getConnection();
+	    $connection = ConnectPDO::singleton();
         $dbh=$connection->prepare("SELECT idterritorio ,nombre as nombreterri, tipo from territorios where tipo='Municipio' or tipo='Exclave' limit 500");
         $dbh->execute();
         $terris=$dbh->fetchAll();
@@ -39,7 +39,7 @@ $app->get("/listaterritorios/",function() use($app){
 $app->get("/territorio/:id",function($id) use($app){
 
 	try{
-	    $connection=getConnection();
+	    $connection = ConnectPDO::singleton();
 		$dbh=$connection->prepare("SELECT * from territorios where idterritorio=?");
 		$dbh->bindParam(1,$id);
 		$dbh->execute();
